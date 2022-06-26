@@ -2,6 +2,9 @@
   height: 400px;
   width: 400px;
 }
+svg {
+  margin: auto;
+}
 
 .timer {
   position: relative;

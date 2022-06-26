@@ -7,17 +7,20 @@ const perimeter = circle.getAttribute("r") * Math.PI * 2;
 circle.setAttribute("stroke-dasharray", perimeter);
 
 let duration;
+let balancetime;
+let offsetleft;
 
 const timer = new Timer(di, sb, pb, {
   onStart(totalDuration) {
-    circle.setAttribute("stroke", "green");
     duration = totalDuration;
+    sb.disabled = true;
+    if (duration == totalDuration) {
+      circle.setAttribute("stroke", "green");
+    }
   },
   onTick(timeRemaining) {
-    circle.setAttribute(
-      "stroke-dashoffset",
-      (perimeter * timeRemaining) / duration - perimeter
-    );
+    offsetleft = (perimeter * timeRemaining) / duration - perimeter;
+    circle.setAttribute("stroke-dashoffset", offsetleft);
 
     if (timeRemaining <= (duration * 3) / 4) {
       circle.setAttribute("stroke", "#ffac33");
@@ -35,6 +38,8 @@ const timer = new Timer(di, sb, pb, {
   },
   onPause() {
     console.log("Timer stopped");
+    sb.disabled = false;
+    offsetleft = circle.getAttribute("stroke-dashoffset");
   },
   onComplete() {
     console.log("Timer Completed");
